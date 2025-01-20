@@ -69,7 +69,17 @@ router.post('/adminlogin', (req, res) => {
 //admin login end
 
 //image uploads work start
-
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    let imgPath = path.join(__dirname + '/../public/images/');
+    cb(null, imgPath);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
+  },
+});
+const upload = multer({ storage: storage });
 //image uploads work finished
 
 //pdf uploads work start
