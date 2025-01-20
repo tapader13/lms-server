@@ -7,65 +7,65 @@ const cron = require('node-cron');
 const nodemailer = require('nodemailer');
 const Joi = require('joi');
 //admin login start
-// router.post('/adminlogin', (req, res) => {
-//   let sql = 'select * from users where email = ? and password = ? and role=?';
-//   db.query(sql, [req.body.email, req.body.password, 'admin'], (err, data) => {
-//     if (err) {
-//       return res.json({ loginstatus: false, err: 'query err' });
-//     }
-//     if (data.length > 0) {
-//       const email = data[0].email;
-//       const token = jwt.sign(
-//         { role: 'admin', email: email },
-//         'jwt_secret_key',
-//         { expiresIn: '1d' }
-//       );
-//       let updateTokenQuery = `UPDATE users SET cookie = ? WHERE email = ?`;
+router.post('/adminlogin', (req, res) => {
+  let sql = 'select * from users where email = ? and password = ? and role=?';
+  db.query(sql, [req.body.email, req.body.password, 'admin'], (err, data) => {
+    if (err) {
+      return res.json({ loginstatus: false, err: 'query err' });
+    }
+    if (data.length > 0) {
+      const email = data[0].email;
+      const token = jwt.sign(
+        { role: 'admin', email: email },
+        'jwt_secret_key',
+        { expiresIn: '1d' }
+      );
+      let updateTokenQuery = `UPDATE users SET cookie = ? WHERE email = ?`;
 
-//       db.query(updateTokenQuery, [token, email], (err, result) => {
-//         if (err) {
-//           return res.json({ status: false, err: 'query err' });
-//         } else {
-//           res.cookie('token', token);
-//           return res.json({ loginstatus: true, role: 'admin' });
-//         }
-//       });
-//     } else {
-//       let sql =
-//         'select * from users where email = ? and password = ? and status=?';
-//       db.query(
-//         sql,
-//         [req.body.email, req.body.password, 'active'],
-//         (err, data) => {
-//           if (err) {
-//             return res.json({ loginstatus: false, err: 'query err' });
-//           }
-//           if (data.length > 0) {
-//             const email = data[0].email;
-//             const token = jwt.sign(
-//               { role: 'admin', email: email },
-//               'jwt_secret_key',
-//               { expiresIn: '1d' }
-//             );
-//             let updateTokenQuery = `UPDATE users SET cookie = ? WHERE email = ?`;
+      db.query(updateTokenQuery, [token, email], (err, result) => {
+        if (err) {
+          return res.json({ status: false, err: 'query err' });
+        } else {
+          res.cookie('token', token);
+          return res.json({ loginstatus: true, role: 'admin' });
+        }
+      });
+    } else {
+      let sql =
+        'select * from users where email = ? and password = ? and status=?';
+      db.query(
+        sql,
+        [req.body.email, req.body.password, 'active'],
+        (err, data) => {
+          if (err) {
+            return res.json({ loginstatus: false, err: 'query err' });
+          }
+          if (data.length > 0) {
+            const email = data[0].email;
+            const token = jwt.sign(
+              { role: 'admin', email: email },
+              'jwt_secret_key',
+              { expiresIn: '1d' }
+            );
+            let updateTokenQuery = `UPDATE users SET cookie = ? WHERE email = ?`;
 
-//             db.query(updateTokenQuery, [token, email], (err, result) => {
-//               if (err) {
-//                 return res.json({ status: false, err: 'query err' });
-//               } else {
-//                 const role = data[0].role;
-//                 res.cookie('token', token);
-//                 return res.json({ loginstatus: true, role });
-//               }
-//             });
-//           } else {
-//             return res.json({ status: false, err: 'not found users' });
-//           }
-//         }
-//       );
-//     }
-//   });
-// });
+            db.query(updateTokenQuery, [token, email], (err, result) => {
+              if (err) {
+                return res.json({ status: false, err: 'query err' });
+              } else {
+                const role = data[0].role;
+                res.cookie('token', token);
+                return res.json({ loginstatus: true, role });
+              }
+            });
+          } else {
+            return res.json({ status: false, err: 'not found users' });
+          }
+        }
+      );
+    }
+  });
+});
 //admin login end
 
 //image uploads work start
