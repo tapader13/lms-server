@@ -68,7 +68,7 @@ router.post('/adminlogin', (req, res) => {
 });
 //admin login end
 
-//image uploads work start
+//image uploads work starting
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     let imgPath = path.join(__dirname + '/../public/images/');
